@@ -8,23 +8,49 @@
 </head>
 
 <body>
+    <div id="root"></div>
     <script type="module">
-        import {h} from './node_modules/vue/dist/vue.esm-browser.prod.js'
+        import { createApp, h } from 'https://cdn.jsdelivr.net/npm/vue@3.2.45/dist/vue.esm-browser.prod.js'
         
         const Login = {
-            data(){
-            return{
-                username: "alex",
-                password: "sarah"
+            data() {
+                return {
+                    username: "alex",
+                    password: "sarah"
+                }
+            },
+            render() {
+                return h('form', { onSubmit: this.handleSubmit }, [
+                    h('div', [
+                        h('label', { for: 'username' }, 'Username:'),
+                        h('input', {
+                            id: 'username',
+                            type: 'text',
+                            value: this.username,
+                            onInput: event => this.username = event.target.value
+                        })
+                    ]),
+                    h('div', [
+                        h('label', { for: 'password' }, 'Password:'),
+                        h('input', {
+                            id: 'password',
+                            type: 'password',
+                            value: this.password,
+                            onInput: event => this.password = event.target.value
+                        })
+                    ]),
+                    h('button', { type: 'submit' }, 'Login')
+                ]);
+            },
+            methods: {
+                handleSubmit(event) {
+                    event.preventDefault();
+                    console.log(`Username: ${this.username}, Password: ${this.password}`);
+                }
             }
-        },
-            render(){
-            // virtual dom
-            return h('form')
-            }
-        }
-        createApp(Login).mount('#root')
+        };
 
+        createApp(Login).mount('#root');
     </script>
 </body>
 
